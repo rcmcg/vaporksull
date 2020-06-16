@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">cmpt276_a3</string>
+    <string name="myGameName">myGameName</string>
+    <string name="game_name">GAME_NAME</string>
+    <string name="welcome_game_icon_description">Icon for theme of game (undecided)</string>
+    <string name="btnWelcomeNextStr">Next</string>
+    <string name="by_author_name">by Reece McGowan</string>
 </resources>
