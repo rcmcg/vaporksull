@@ -15,18 +15,42 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import model.Board;
 import model.GameData;
 
 public class PlayGameActivity extends AppCompatActivity {
 
     Button buttons[][];
+    Board gameBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
 
+        // Get GameData Singleton
+        GameData gameData = GameData.getInstance();
+        // TEST
+        gameData.setRows(4);
+        gameData.setCols(6);
+
+        gameBoard = new Board(gameData.getRows(), gameData.getCols(), 5);
+
         populateButtons();
+        populateGameBoard(gameBoard);
+
+        /*
+        System.out.println("TRACE: Printing contents of board");
+        for (int row = 0; row < gameData.getRows(); row++) {
+            for (int col = 0; col < gameData.getCols(); col++) {
+                // System.out.print("TRACE:" + gameBoard.getIndex(row, col));
+                // System.out.print("TRACE: [" + row + "," + col + "] Mine: " + gameBoard.getIndex(row,col).hasMine() + " Scanned: " + gameBoard.getIndex(row,col).isScanned() + " ");
+                System.out.print("TRACE: [" + gameBoard.getIndex(row,col).hasMine() + "," + gameBoard.getIndex(row,col).isScanned() + "]");
+            }
+            System.out.println("");
+        }
+
+         */
     }
 
     private void populateButtons() {
@@ -34,10 +58,6 @@ public class PlayGameActivity extends AppCompatActivity {
 
         // Get GameData Singleton
         GameData gameData = GameData.getInstance();
-
-        // TEST
-        gameData.setRows(6);
-        gameData.setCols(15);
 
         buttons = new Button[gameData.getRows()][gameData.getCols()];
 
@@ -68,6 +88,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
                 // Make text not clip on small buttons
                 btn.setPadding(0,0,0,0);
+
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -103,7 +124,6 @@ public class PlayGameActivity extends AppCompatActivity {
 
         // Change text on button:
         btn.setText("" + col);
-
     }
 
     private void lockButtonSizes() {
@@ -120,6 +140,15 @@ public class PlayGameActivity extends AppCompatActivity {
                 button.setMaxHeight(height);
             }
         }
+    }
+
+    private void populateGameBoard(Board gameBoard) {
+        // Setup initial game board
+
+        // Get gameData instance
+        GameData gameData = GameData.getInstance();
+
+        gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getMines());
     }
 
     public static Intent makeIntent(Context context) {

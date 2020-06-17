@@ -1,11 +1,11 @@
 package model;
 
 public class Cell {
-    Mine mine;
-    boolean scanned;
+    private Mine mine;
+    private boolean scanned;
 
-    public Cell(boolean hasMine) {
-        if (hasMine) {
+    public Cell(boolean buildMine) {
+        if (buildMine) {
             mine = new Mine();
         } else {
             mine = null;
@@ -13,8 +13,23 @@ public class Cell {
         scanned = false;
     }
 
+    public boolean hasMine() {
+        return mine != null;
+    }
+
     public Mine getMine() {
         return mine;
+    }
+
+    public void setMine(boolean bool) {
+        if (bool) {
+            if (!hasMine()) {
+                mine = new Mine();
+            }
+        } else {
+            mine = null;
+        }
+        return;
     }
 
     public boolean isScanned() {
