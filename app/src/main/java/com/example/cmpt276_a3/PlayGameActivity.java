@@ -36,7 +36,7 @@ public class PlayGameActivity extends AppCompatActivity {
         GameData gameData = GameData.getInstance();
         // TEST
         gameData.setRows(4);
-        gameData.setCols(6);
+        gameData.setCols(4);
         gameData.setMines(5);
         scans = 0;
         uncoveredMines = 0;
@@ -224,7 +224,15 @@ public class PlayGameActivity extends AppCompatActivity {
     private void changeButtonBackgroundToMine(Button btn) {
         int newWidth = btn.getWidth();
         int newHeight = btn.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.blue_spotted_egg);
+        // int chosenDimension = Math.min(newHeight, newWidth);
+        
+        // for testing
+        // chosenDimension = newHeight;
+        // Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, chosenDimension, chosenDimension, true);
+        // btn.setForeground(new BitmapDrawable(resource, scaledBitmap));
+
+        // Original code provided by Dr. Brian Fraser
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.skull_10percent);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
         btn.setBackground(new BitmapDrawable(resource, scaledBitmap));
