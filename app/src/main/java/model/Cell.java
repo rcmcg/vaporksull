@@ -3,6 +3,7 @@ package model;
 public class Cell {
     private Mine mine;
     private boolean scanned;
+    private int hiddenCount;
 
     public Cell(boolean buildMine) {
         if (buildMine) {
@@ -11,6 +12,7 @@ public class Cell {
             mine = null;
         }
         scanned = false;
+        hiddenCount = -1;
     }
 
     public boolean hasMine() {
@@ -38,5 +40,13 @@ public class Cell {
 
     public void setScanned(boolean scanned) {
         this.scanned = scanned;
+    }
+
+    public int getHiddenCount() {
+        return hiddenCount;
+    }
+
+    public void setHiddenCount(int hiddenCount) {
+        this.hiddenCount = hiddenCount;
     }
 }
