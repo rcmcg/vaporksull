@@ -1,19 +1,28 @@
 package com.example.cmpt276_a3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
+
+import java.sql.SQLOutput;
 
 import model.Board;
 import model.Cell;
@@ -36,15 +45,53 @@ public class PlayGameActivity extends AppCompatActivity {
         GameData gameData = GameData.getInstance();
         // TEST
         gameData.setRows(4);
-        gameData.setCols(4);
+        gameData.setCols(6);
         gameData.setMines(5);
         scans = 0;
         uncoveredMines = 0;
 
-        gameBoard = new Board(gameData.getRows(), gameData.getCols(), 5);
+        gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getMines());
 
         populateButtons();
         populateGameBoard(gameBoard);
+    }
+
+    private void setButtonImagesToDefault() {
+        System.out.println("TRACE: ENTERING SET BUTTON IMAGES TO DEFAULT");
+        GameData gameData = GameData.getInstance();
+        Button btn;
+        /*
+        for (int row = 0; row < gameData.getRows(); row++) {
+            for( int col = 0; col < gameData.getCols(); col++) {
+                btn = buttons[row][col];
+                // Maybe use this stack overflow link
+                // https://stackoverflow.com/questions/13929877/how-to-make-gradient-background-in-android
+                // to set it to the boxes.png gradient, ask Breanna for the start and end color
+                // btn.setBackgroundColor(Color.BLUE);
+                System.out.println("TRACE: btn.getWidth() " + btn.getWidth());
+                System.out.println("TRACE: btn.getHeight() " + btn.getHeight());
+            }
+        }
+         */
+
+
+        // Change all buttons background to boxes.png background
+        /*
+        for (int row = 0; row < gameData.getRows(); row++) {
+            for (int col = 0; col < gameData.getCols(); col++) {
+                btn = buttons[row][col];
+                // Turn this into a function?
+                int newWidth = btn.getWidth();
+                System.out.println("TRACE: btn.getWidth()" + btn.getWidth());
+                int newHeight = btn.getHeight();
+                System.out.println("TRACE: btn.getHeight()" + btn.getHeight());
+                Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.boxes);
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+                Resources resource = getResources();
+                btn.setBackground(new BitmapDrawable(resource, scaledBitmap));
+            }
+        }
+         */
     }
 
     private void populateButtons() {
@@ -83,6 +130,12 @@ public class PlayGameActivity extends AppCompatActivity {
 
                 // Make text not clip on small buttons
                 btn.setPadding(0,0,0,0);
+
+                // Maybe use this stack overflow link
+                // https://stackoverflow.com/questions/13929877/how-to-make-gradient-background-in-android
+                // to set it to the boxes.png gradient, ask Breanna for the start and end color
+                // ContextCompat.getDrawable(this, R.drawable.boxes);
+                btn.setBackground(ContextCompat.getDrawable(this, R.drawable.boxes_border));
 
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -217,25 +270,37 @@ public class PlayGameActivity extends AppCompatActivity {
         // Update cell hiddenCount to total number of mines in row and col
         gameBoard.getIndex(row, col).setHiddenCount(colMines + rowMines);
 
-        // Update button text with new number
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "alien_encounters_solid_bold_italic.ttf");
         btn.setText("" + gameBoard.getIndex(row,col).getHiddenCount());
+        btn.setTypeface(typeface);
+        btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+        // btn.setTextColor(Color.YELLOW);
+
+        // Update button text with new number
+        // btn.setText("" + gameBoard.getIndex(row,col).getHiddenCount());
     }
 
     private void changeButtonBackgroundToMine(Button btn) {
         int newWidth = btn.getWidth();
         int newHeight = btn.getHeight();
-        // int chosenDimension = Math.min(newHeight, newWidth);
-        
-        // for testing
-        // chosenDimension = newHeight;
-        // Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, chosenDimension, chosenDimension, true);
-        // btn.setForeground(new BitmapDrawable(resource, scaledBitmap));
-
-        // Original code provided by Dr. Brian Fraser
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.skull_10percent);
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.skull4_50percent);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
         btn.setBackground(new BitmapDrawable(resource, scaledBitmap));
+        // btn.setCompoundDrawablesWithIntrinsicBounds(null, new BitmapDrawable(resource, scaledBitmap), null, null);
+        // btn.setCompoundDrawables(null, new BitmapDrawable(resource, scaledBitmap), null, null);
+        // btn.setBackgroundColor(Color.TRANSPARENT);
+
+        // taken from stackoverflow
+        // https://stackoverflow.com/questions/6590838/calling-setcompounddrawables-doesnt-display-the-compound-drawable
+        // probably won't use
+        // Drawable image = this.getResources().getDrawable( R.drawable.skull_10percent );
+        // int h = image.getIntrinsicHeight() / 2;
+        // int w = image.getIntrinsicWidth() / 2;
+        // image.setBounds( 0, 0, w, h );
+        // btn.setGravity(Gravity.CENTER);
+        // btn.setCompoundDrawablePadding(0);
+        // btn.setCompoundDrawables( image, null, null, null );
     }
 
     private void lockButtonSizes() {
@@ -244,12 +309,23 @@ public class PlayGameActivity extends AppCompatActivity {
                 Button button = buttons[row][col];
 
                 int width = button.getWidth();
+                // System.out.println("TRACE: in lockButtonSizes button.getWidth() " + width);
                 button.setMinWidth(width);
                 button.setMaxWidth(width);
 
                 int height = button.getHeight();
+                // System.out.println("TRACE: in lockButtonSizes button.getHeight() " + height);
                 button.setMinHeight(height);
                 button.setMaxHeight(height);
+
+                /*
+                if ((row%2 == 0) & (col%2 == 1)) {
+                    button.setBackgroundColor(Color.BLUE);
+                } else {
+                    button.setBackgroundColor(Color.BLACK);
+                }
+                 */
+
             }
         }
     }

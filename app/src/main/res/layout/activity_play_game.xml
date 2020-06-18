@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".PlayGameActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_50percent"
+        tools:layout_editor_absoluteY="271dp" />
+
     <TableLayout
         android:id="@+id/tableForCells"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="*"
+
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        tools:layout_editor_absoluteY="1dp"
+        >
+        <!--android:gravity="center"-->
+        <!--android:stretchColumns="*"-->
     </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

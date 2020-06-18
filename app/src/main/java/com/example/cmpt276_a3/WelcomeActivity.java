@@ -3,6 +3,10 @@ package com.example.cmpt276_a3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         setupNextButton();
-
     }
 
     @Override
@@ -61,5 +64,15 @@ public class WelcomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Do this in the XML file
+        /*
+        int newWidth = btn.getWidth();
+        int newHeight = btn.getHeight();
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.boxes6_50percent);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+        Resources resource = getResources();
+        btn.setBackground(new BitmapDrawable(resource, scaledBitmap));
+         */
     }
 }
