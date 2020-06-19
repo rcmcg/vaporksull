@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash_50percent"
+        android:src="@drawable/splash3_50percent"
         tools:layout_editor_absoluteY="271dp" />
 
     <TableLayout

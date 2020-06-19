@@ -37,27 +37,10 @@ public class Board implements Iterable<Cell>{
                 getIndex(randomRow, randomCol).setMine(true);
                 mineCounter++;
             }
-
         }
-        /*
-        while (mineCounter < mines) {
-            for(int row = 0; row < rows; row++) {
-                for(int col = 0; col < cols; col++) {
-                    // Each cell has an equal probability of getting a mine
-                    int randomNum = ThreadLocalRandom.current().nextInt(1, rows*cols + 1);
-                    if (randomNum == 1) {
-                        if (mineCounter < mines) {
-                            if (!getIndex(row, col).hasMine()) {
-                                getIndex(row,col).setMine(true);
-                                mineCounter++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        */
     }
+
+
 
     public int getRows() {
         return gameBoard.size();
