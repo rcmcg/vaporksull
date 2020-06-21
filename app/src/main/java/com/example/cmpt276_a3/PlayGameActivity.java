@@ -44,9 +44,9 @@ public class PlayGameActivity extends AppCompatActivity {
         // Get GameData Singleton
         GameData gameData = GameData.getInstance();
         // TEST
-        gameData.setRows(4);
-        gameData.setCols(6);
-        gameData.setMines(5);
+        // gameData.setRows(4);
+        // gameData.setCols(6);
+        // gameData.setMines(5);
         scans = 0;
         uncoveredMines = 0;
 

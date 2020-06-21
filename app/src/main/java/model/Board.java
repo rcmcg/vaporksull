@@ -140,7 +140,7 @@ public class Board implements Iterable<Cell>{
     private void changeButtonBackgroundToMine(Button btn, Context context) {
         int newWidth = btn.getWidth();
         int newHeight = btn.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.skull4_50percent);
+        Bitmap originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.skull4_50percent);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = context.getResources();
         btn.setBackground(new BitmapDrawable(resource, scaledBitmap));

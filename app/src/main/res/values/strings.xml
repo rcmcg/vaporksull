@@ -1,8 +1,25 @@
 <resources>
-    <string name="app_name">cmpt276_a3</string>
+    <string name="app_name">VAPORSKULL</string>
     <string name="myGameName">VAPORSKULL</string>
     <string name="game_name">null</string>
     <string name="welcome_game_icon_description">Icon for theme of game (undecided)</string>
     <string name="btnWelcomeNextStr">Next</string>
     <string name="by_author_name">by Reece McGowan</string>
+
+    <string name="board_size_prompt">Board size prompt</string>
+    <string-array name="board_size_arrays">
+        <item>Select a board size</item>
+        <item>4 x 6</item>
+        <item>5 x 10</item>
+        <item>6 x 15</item>
+    </string-array>
+
+    <string name="mines_prompt"># Mines prompt</string>
+    <string-array name="mine_size_arrays">
+        <item>Select number of mines</item>
+        <item>6</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
 </resources>
