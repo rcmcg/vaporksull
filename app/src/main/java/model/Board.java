@@ -93,9 +93,9 @@ public class Board implements Iterable<Cell>{
 
         // This code taken from
         // https://stackoverflow.com/questions/6372458/setting-button-text-font-in-android
-        Typeface typeface = Typeface.createFromAsset(mngr, "alien_encounters_solid_bold_italic.ttf");
+        // Typeface typeface = Typeface.createFromAsset(mngr, "alien_encounters_solid_bold_italic.ttf");
         btn.setText("" + getIndex(row,col).getHiddenCount());
-        btn.setTypeface(typeface);
+        // btn.setTypeface(typeface);
         // btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
     }
 

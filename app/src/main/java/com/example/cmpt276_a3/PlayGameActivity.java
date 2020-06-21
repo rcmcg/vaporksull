@@ -138,6 +138,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
                 // btn.setTextAppearance(R.style.GameButtonStyle);
                 btn.setBackground(getDrawable(R.drawable.gradient));
+                btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
 
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
