@@ -96,7 +96,7 @@ public class Board implements Iterable<Cell>{
         Typeface typeface = Typeface.createFromAsset(mngr, "alien_encounters_solid_bold_italic.ttf");
         btn.setText("" + getIndex(row,col).getHiddenCount());
         btn.setTypeface(typeface);
-        btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+        // btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
     }
 
     private void revealMine(int row, int col, Button[][] buttons, Context context) {

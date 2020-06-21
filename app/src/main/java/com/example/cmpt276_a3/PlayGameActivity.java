@@ -46,7 +46,7 @@ public class PlayGameActivity extends AppCompatActivity {
         // TEST
         // gameData.setRows(4);
         // gameData.setCols(6);
-        // gameData.setMines(5);
+        // gameData.setMines(24);
         scans = 0;
         uncoveredMines = 0;
 
@@ -105,8 +105,6 @@ public class PlayGameActivity extends AppCompatActivity {
         // System.out.println("TRACE: gameData.getRows: " + gameData.getRows());
         // System.out.println("TRACE: gameData.getCols: " + gameData.getCols());
 
-        // App crashes if rows or cols == 0, set an input check
-
         for (int row = 0; row < gameData.getRows(); row++) {
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
@@ -135,7 +133,11 @@ public class PlayGameActivity extends AppCompatActivity {
                 // https://stackoverflow.com/questions/13929877/how-to-make-gradient-background-in-android
                 // to set it to the boxes.png gradient, ask Breanna for the start and end color
                 // ContextCompat.getDrawable(this, R.drawable.boxes);
-                btn.setBackground(ContextCompat.getDrawable(this, R.drawable.boxes_border));
+                // this line causes the UI to stretch if the entire row or entire column is drawn with skulls
+                // btn.setBackground(ContextCompat.getDrawable(this, R.drawable.boxes_border));
+
+                // btn.setTextAppearance(R.style.GameButtonStyle);
+                btn.setBackground(getDrawable(R.drawable.gradient));
 
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
