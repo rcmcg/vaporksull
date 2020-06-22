@@ -22,16 +22,12 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Board implements Iterable<Cell>{
-    // private int rows;
-    // private int cols;
-
     private static Random rand = new Random();
 
     private List<List<Cell>> gameBoard = new ArrayList<>();
-    // private List<List<Cell>> gameBoard;
 
     public Board(int rows, int cols, int mines) {
-        // Fill gameBoard with Cells,
+        // Fill gameBoard with Cells
         for(int row = 0; row < rows; row++) {
             gameBoard.add(new ArrayList<Cell>());
             for (int col = 0; col < cols; col++) {
@@ -91,12 +87,8 @@ public class Board implements Iterable<Cell>{
 
         AssetManager mngr = context.getAssets();
 
-        // This code taken from
-        // https://stackoverflow.com/questions/6372458/setting-button-text-font-in-android
-        // Typeface typeface = Typeface.createFromAsset(mngr, "alien_encounters_solid_bold_italic.ttf");
-        btn.setText("" + getIndex(row,col).getHiddenCount());
-        // btn.setTypeface(typeface);
-        // btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+        String string = context.getString(R.string.cell_text, getIndex(row,col).getHiddenCount());
+        btn.setText(string);
     }
 
     private void revealMine(int row, int col, Button[][] buttons, Context context) {
@@ -105,11 +97,11 @@ public class Board implements Iterable<Cell>{
 
         changeButtonBackgroundToMine(buttons[row][col], context);
 
-        updateScannedCountsInCol(row, col, buttons);
-        updateScannedCountsInRow(row, col, buttons);
+        updateScannedCountsInCol(row, col, buttons, context);
+        updateScannedCountsInRow(row, col, buttons, context);
     }
 
-    private void updateScannedCountsInCol(int row, int col, Button[][] buttons) {
+    private void updateScannedCountsInCol(int row, int col, Button[][] buttons, Context context) {
         Button btn;
         for (int iterRow = 0; iterRow < getRows(); iterRow++) {
             if (iterRow != row) {
@@ -117,13 +109,15 @@ public class Board implements Iterable<Cell>{
                 if (cell.isScanned()) {
                     cell.setHiddenCount(cell.getHiddenCount() - 1);
                     btn = buttons[iterRow][col];
-                    btn.setText("" + cell.getHiddenCount());
+                    String string = context.getString(R.string.cell_text, cell.getHiddenCount());
+                    btn.setText(string);
+                    // btn.setText("" + cell.getHiddenCount());
                 }
             }
         }
     }
 
-    private void updateScannedCountsInRow(int row, int col, Button[][] buttons) {
+    private void updateScannedCountsInRow(int row, int col, Button[][] buttons, Context context) {
         Button btn;
         for (int iterCol = 0; iterCol < getCols(); iterCol++) {
             if (iterCol != col) {
@@ -131,7 +125,9 @@ public class Board implements Iterable<Cell>{
                 if (cell.isScanned()) {
                     cell.setHiddenCount(cell.getHiddenCount() - 1);
                     btn = buttons[row][iterCol];
-                    btn.setText("" + cell.getHiddenCount());
+                    String string = context.getString(R.string.cell_text, cell.getHiddenCount());
+                    btn.setText(string);
+                    // btn.setText("" + cell.getHiddenCount());
                 }
             }
         }

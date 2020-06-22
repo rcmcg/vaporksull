@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLOutput;
@@ -50,48 +51,12 @@ public class PlayGameActivity extends AppCompatActivity {
         scans = 0;
         uncoveredMines = 0;
 
+        setFoundScansText();
+
         gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getMines());
 
         populateButtons();
         populateGameBoard(gameBoard);
-    }
-
-    private void setButtonImagesToDefault() {
-        System.out.println("TRACE: ENTERING SET BUTTON IMAGES TO DEFAULT");
-        GameData gameData = GameData.getInstance();
-        Button btn;
-        /*
-        for (int row = 0; row < gameData.getRows(); row++) {
-            for( int col = 0; col < gameData.getCols(); col++) {
-                btn = buttons[row][col];
-                // Maybe use this stack overflow link
-                // https://stackoverflow.com/questions/13929877/how-to-make-gradient-background-in-android
-                // to set it to the boxes.png gradient, ask Breanna for the start and end color
-                // btn.setBackgroundColor(Color.BLUE);
-                System.out.println("TRACE: btn.getWidth() " + btn.getWidth());
-                System.out.println("TRACE: btn.getHeight() " + btn.getHeight());
-            }
-        }
-         */
-
-
-        // Change all buttons background to boxes.png background
-        /*
-        for (int row = 0; row < gameData.getRows(); row++) {
-            for (int col = 0; col < gameData.getCols(); col++) {
-                btn = buttons[row][col];
-                // Turn this into a function?
-                int newWidth = btn.getWidth();
-                System.out.println("TRACE: btn.getWidth()" + btn.getWidth());
-                int newHeight = btn.getHeight();
-                System.out.println("TRACE: btn.getHeight()" + btn.getHeight());
-                Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.boxes);
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-                Resources resource = getResources();
-                btn.setBackground(new BitmapDrawable(resource, scaledBitmap));
-            }
-        }
-         */
     }
 
     private void populateButtons() {
@@ -101,9 +66,6 @@ public class PlayGameActivity extends AppCompatActivity {
         GameData gameData = GameData.getInstance();
 
         buttons = new Button[gameData.getRows()][gameData.getCols()];
-
-        // System.out.println("TRACE: gameData.getRows: " + gameData.getRows());
-        // System.out.println("TRACE: gameData.getCols: " + gameData.getCols());
 
         for (int row = 0; row < gameData.getRows(); row++) {
             TableRow tableRow = new TableRow(this);
@@ -128,16 +90,8 @@ public class PlayGameActivity extends AppCompatActivity {
 
                 // Make text not clip on small buttons
                 btn.setPadding(0,0,0,0);
-
-                // Maybe use this stack overflow link
-                // https://stackoverflow.com/questions/13929877/how-to-make-gradient-background-in-android
-                // to set it to the boxes.png gradient, ask Breanna for the start and end color
-                // ContextCompat.getDrawable(this, R.drawable.boxes);
-                // this line causes the UI to stretch if the entire row or entire column is drawn with skulls
-                // btn.setBackground(ContextCompat.getDrawable(this, R.drawable.boxes_border));
-
-                // btn.setTextAppearance(R.style.GameButtonStyle);
                 btn.setBackground(getDrawable(R.drawable.gradient));
+                btn.setTextColor(Color.YELLOW);
                 btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
 
                 btn.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +100,7 @@ public class PlayGameActivity extends AppCompatActivity {
                         gridButtonClicked(FINAL_ROW, FINAL_COL);
                     }
                 });
+
 
                 tableRow.addView(btn);
                 buttons[row][col] = btn;
@@ -168,7 +123,8 @@ public class PlayGameActivity extends AppCompatActivity {
         // Lock button sizes
         lockButtonSizes();
 
-        // Toast.makeText(this, "Scans:" + scans, Toast.LENGTH_SHORT).show();
+        setFoundScansText();
+
         if (gameBoard.isGameOver(uncoveredMines)) {
             Toast.makeText(this, "You win!",Toast.LENGTH_LONG).show();
 
@@ -181,25 +137,27 @@ public class PlayGameActivity extends AppCompatActivity {
                 Button button = buttons[row][col];
 
                 int width = button.getWidth();
-                // System.out.println("TRACE: in lockButtonSizes button.getWidth() " + width);
                 button.setMinWidth(width);
                 button.setMaxWidth(width);
 
                 int height = button.getHeight();
-                // System.out.println("TRACE: in lockButtonSizes button.getHeight() " + height);
                 button.setMinHeight(height);
                 button.setMaxHeight(height);
-
-                /*
-                if ((row%2 == 0) & (col%2 == 1)) {
-                    button.setBackgroundColor(Color.BLUE);
-                } else {
-                    button.setBackgroundColor(Color.BLACK);
-                }
-                 */
-
             }
         }
+    }
+
+    private void setFoundScansText() {
+        GameData gameData = GameData.getInstance();
+
+        // Set text for foundMines and scansPerformed
+        TextView txtFoundMines = findViewById(R.id.txtFoundMines);
+        String found_mines = getString(R.string.found_mines, uncoveredMines, gameData.getMines());
+        txtFoundMines.setText(found_mines);
+
+        TextView txtScans = findViewById(R.id.txtScansPerformed);
+        String scans_performed = getString(R.string.scans_used, scans);
+        txtScans.setText(scans_performed);
     }
 
     private void populateGameBoard(Board gameBoard) {

@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alien_encounters_solid"
-            android:text="Settings"
+            android:text="@string/optionsActivity_settings"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alien_encounters_solid"
-                android:text="Board size:"
+                android:text="@string/optionsActivity_board_size"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
 
@@ -65,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/alien_encounters_solid"
-                android:text="# Mines:"
+                android:text="@string/optionsActivity_mines"
 
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />

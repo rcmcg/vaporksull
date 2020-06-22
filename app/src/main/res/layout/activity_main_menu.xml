@@ -30,7 +30,7 @@
                 android:id="@+id/btnPlay"
                 android:layout_width="200dp"
                 android:layout_height="100dp"
-                android:text="Play"
+                android:text="@string/play_button"
                 android:fontFamily="@font/alien_encounters_solid_italic"
                 android:background="@drawable/boxes4"
                 android:textSize="30sp" />
@@ -39,7 +39,7 @@
                 android:id="@+id/btnOptions"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:text="Options"
+                android:text="@string/options_button"
                 android:fontFamily="@font/alien_encounters_solid_italic"
                 android:background="@drawable/boxes"
                 android:textSize="30sp" />
@@ -48,7 +48,7 @@
                 android:id="@+id/btnHelp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:text="Help"
+                android:text="@string/help_button"
                 android:fontFamily="@font/alien_encounters_solid_italic"
                 android:background="@drawable/boxes4"
                 android:textSize="30sp" />
