@@ -4,26 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.Toast;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 import model.GameData;
 
 public class OptionsActivity extends AppCompatActivity {
+
+    int[][] boardOptions = new int[][]{ {4,6}, {5,10}, {6,15}};
+    int[] mineOptions = new int[]{6, 10, 15, 20 };
+
+    private static final String ROW_PREF_NAME = "Num rows";
+    private static final String COL_PREF_NAME = "Num cols";
+    private static final String BOARD_PREF_NAME = "BoardSettings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
+        int[] savedRowsCols = getNumRowsCols(this);
+        // Toast.makeText(this, "Saved rows cols: " + savedRowsCols[0] + "," + savedRowsCols[1], Toast.LENGTH_SHORT)
+            // .show();
 
         // Spinner mineSpinner = findViewById(R.id.game_spinner);
         populateGameSizeSpinner();
@@ -50,11 +56,21 @@ public class OptionsActivity extends AppCompatActivity {
         // The spinner should select the chosen option to be the current gameData
         // needs to save between runs
 
+        // Select default spinner
+
+        for (int i = 0; i < boardOptions.length; i++) {
+            if (getNumRowsCols(this)[0] == boardOptions[i][0]) {
+                gameSizeSpinner.setSelection(i+1);
+            }
+        }
+
+
         gameSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
 
+                /*
                 if(position == 1) {
                     gameData.setRows(4);
                     gameData.setCols(6);
@@ -65,14 +81,54 @@ public class OptionsActivity extends AppCompatActivity {
                     gameData.setRows(6);
                     gameData.setCols(15);
                 }
+
+                 */
+                if(position != 0) {
+                    gameData.setRows(boardOptions[position-1][0]);
+                    gameData.setCols(boardOptions[position-1][1]);
+                    saveBoardSettings(gameData.getRows(), gameData.getCols());
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // GameData gameData = GameData.getInstance();
-                // Toast.makeText(OptionsActivity.this, ""+gameData.getRows(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveBoardSettings(int rows, int cols) {
+        SharedPreferences prefs = this.getSharedPreferences(BOARD_PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(ROW_PREF_NAME, rows);
+        editor.putInt(COL_PREF_NAME, cols);
+        editor.apply();
+    }
+
+    static public int[] getNumRowsCols(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(BOARD_PREF_NAME, MODE_PRIVATE);
+
+        int default_rows = context.getResources().getInteger(R.integer.default_rows);
+        int default_cols = context.getResources().getInteger(R.integer.default_cols);
+
+        int rows = prefs.getInt(ROW_PREF_NAME, default_rows);
+        int cols = prefs.getInt(COL_PREF_NAME, default_cols);
+        return new int[]{rows,cols};
+    }
+
+    private void saveMineSettings(int mines) {
+        SharedPreferences prefs = this.getSharedPreferences("Mine settings", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Num mines", mines);
+        editor.apply();
+    }
+
+    static public int getNumMines(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("Mine settings", MODE_PRIVATE);
+
+        int default_mines = context.getResources().getInteger(R.integer.default_mines);
+
+        int rows = prefs.getInt("Num mines", default_mines);
+        return default_mines;
     }
 
     private void populateMineSpinner() {
@@ -90,18 +146,21 @@ public class OptionsActivity extends AppCompatActivity {
         // The spinner should select the chosen option to be the current gameData
         // needs to save between runs
 
+        // Select default spinner
+        for (int i = 0; i < mineOptions.length; i++) {
+            if (getNumMines(this) == mineOptions[i]) {
+                mineSpinner.setSelection(i+1);
+            }
+        }
+
+
         mineSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
-                if(position == 1) {
-                    gameData.setMines(6);
-                } else if (position == 2) {
-                    gameData.setMines(10);
-                } else if (position == 3){
-                    gameData.setMines(15);
-                } else if (position == 4){
-                    gameData.setMines(20);
+                if(position != 0) {
+                    gameData.setMines(mineOptions[position-1]);
+                    saveMineSettings(gameData.getMines());
                 }
             }
 

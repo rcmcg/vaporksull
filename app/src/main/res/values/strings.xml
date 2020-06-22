@@ -25,6 +25,14 @@
         Link: https://www.dafont.com/alien-encounters.font
     </string>
 
+    <string name="victory_dialog_title">You win!</string>
+
+    <string name="victory_dialog_message">
+        You found all the skulls! Press OK to return to the main menu
+    </string>
+
+    <string name="victory_ok">OK</string>
+
     <string name="board_size_prompt">Board size prompt</string>
     <string-array name="board_size_arrays">
         <item>Select a board size</item>
@@ -32,6 +40,10 @@
         <item>5 x 10</item>
         <item>6 x 15</item>
     </string-array>
+    
+    <integer name="default_rows">4</integer>
+    <integer name="default_cols">6</integer>
+    <integer name="default_mines">6</integer>
 
     <string name="mines_prompt"># Mines prompt</string>
     <string name="play_button">Play</string>

@@ -5,9 +5,9 @@ public class GameData {
     private static int cols = 0;
     private static int mines = 0;
 
-    private static int DEFAULT_ROWS = 4;
-    private static int DEFAULT_COLS = 6;
-    private static int DEFAULT_MINES = 5;
+    // private static int DEFAULT_ROWS = 4;
+    // private static int DEFAULT_COLS = 6;
+    // private static int DEFAULT_MINES = 5;
 
 
     // Potentially use this function to save and load information
@@ -22,9 +22,9 @@ public class GameData {
         if (gameData == null) {
             gameData = new GameData();
             // Set default options
-            rows = DEFAULT_ROWS;
-            cols = DEFAULT_COLS;
-            mines = DEFAULT_MINES;
+            // rows = DEFAULT_ROWS;
+            // cols = DEFAULT_COLS;
+            // mines = DEFAULT_MINES;
         }
         return gameData;
     }

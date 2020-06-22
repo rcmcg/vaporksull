@@ -3,7 +3,9 @@ package com.example.cmpt276_a3;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -44,6 +47,16 @@ public class PlayGameActivity extends AppCompatActivity {
 
         // Get GameData Singleton
         GameData gameData = GameData.getInstance();
+
+        // Update to SharedPreferences
+        int savedRows = OptionsActivity.getNumRowsCols(this)[0];
+        int savedCols = OptionsActivity.getNumRowsCols(this)[1];
+        int savedMines = OptionsActivity.getNumMines(this);
+
+        gameData.setRows(savedRows);
+        gameData.setCols(savedCols);
+        gameData.setMines(savedMines);
+
         // TEST
         // gameData.setRows(4);
         // gameData.setCols(6);
@@ -126,7 +139,32 @@ public class PlayGameActivity extends AppCompatActivity {
         setFoundScansText();
 
         if (gameBoard.isGameOver(uncoveredMines)) {
-            Toast.makeText(this, "You win!",Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, "You win!",Toast.LENGTH_LONG).show();
+
+            // Alert code taken from android blog
+            // https://developer.android.com/guide/topics/ui/dialogs
+            AlertDialog.Builder builder = new AlertDialog.Builder(PlayGameActivity.this).setView(R.layout.victory_dialog);
+
+            builder.setMessage(R.string.victory_dialog_message)
+                    .setTitle(R.string.victory_dialog_title);
+
+            builder.setPositiveButton(R.string.victory_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    finish();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            // dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+            dialog.show();
 
         }
     }
