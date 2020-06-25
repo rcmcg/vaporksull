@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// Board holds a 2D array of Cell objects
+
 public class Board{
     private static Random rand = new Random();
 

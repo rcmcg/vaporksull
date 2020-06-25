@@ -1,5 +1,10 @@
 package model;
 
+// Cell makes up the entries of the Board class
+// A cell either has a skull or it doesn't
+// A cell is either scanned or not scanned and its hiddenCount is a count of the hidden
+// skulls in its row and column. Updated when necessary
+
 public class Cell {
     private Skull skull;
     private boolean scanned;

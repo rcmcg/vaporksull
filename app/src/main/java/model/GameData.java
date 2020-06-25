@@ -1,5 +1,7 @@
 package model;
 
+// Holds the Singleton game settings gameData
+
 public class GameData {
     private static int rows = 0;
     private static int cols = 0;
