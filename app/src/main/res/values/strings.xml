@@ -7,11 +7,15 @@
     <string name="by_author_name">by Reece McGowan</string>
 
     <string name="cell_text">%1$d</string>
-    <string name="found_skulls">Found %1$d of %2$d skulls</string>
+    <string name="found_skulls">Skulls (%1$d /%2$d )</string>
     <string name="scans_used">Scans used: %1$d</string>
     <string name="victory_dialog_title">You win!</string>
-    <string name="victory_dialog_message">
+    <string name="victory_dialog_message_no_new_high_score">
         You found all the skulls! Press OK to return to the main menu
+    </string>
+    <string name="victory_dialog_message_new_high_score">
+        You found all the skulls and set a new high score with %1$d scans! Press
+        OK to return to the main menu
     </string>
     <string name="victory_ok">OK</string>
     <string name="victory_dialog_alert_skull_description">Victory dialog alert skull</string>
@@ -73,4 +77,6 @@
     <string name="background_main_menu_description">Background for main menu</string>
     <string name="background_help_description">Background for help activity</string>
     <string name="background_welcome_description">Background for welcome activity</string>
+    <string name="hi_score_string">Hi score: %1$d</string>
+    <string name="no_hi_score_string">Hi score: None!</string>
 </resources>

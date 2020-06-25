@@ -15,9 +15,8 @@ import model.GameData;
 
 public class OptionsActivity extends AppCompatActivity {
 
-
-    int[][] boardOptions = new int[][]{{4,6}, {5,10}, {6,15}};
-    int[] skullOptions = new int[]{6, 10, 15, 20 };
+    private static int[][] boardOptions = new int[][]{{4,6}, {5,10}, {6,15}};
+    private static int[] skullOptions = new int[]{6, 10, 15, 20 };
 
     private static final String SKULL_PREF_NAME = "Skull settings";
     private static final String NUM_SKULLS_PREF_NAME = "Num skulls";
@@ -25,8 +24,12 @@ public class OptionsActivity extends AppCompatActivity {
     private static final String COL_PREF_NAME = "Num cols";
     private static final String BOARD_PREF_NAME = "BoardSettings";
 
-
-
+    public static Intent getBoardOptions(Context context) {
+        Intent intent = new Intent(context, OptionsActivity.class);
+        intent.putExtra("Board Options", boardOptions);
+        intent.putExtra("Skull Options", skullOptions);
+        return intent;
+    }
 
 
     @Override

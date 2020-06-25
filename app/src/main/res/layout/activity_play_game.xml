@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/txtFoundSkulls"
-                android:layout_width="wrap_content"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
@@ -42,11 +42,21 @@
 
             <TextView
                 android:id="@+id/txtScansPerformed"
-                android:layout_width="wrap_content"
+                android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alien_encounters_solid"
                 android:text="@string/scans_used"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtHighScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alien_encounters_solid"
+                android:text="@string/hi_score_string"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 

@@ -17,17 +17,21 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import model.Board;
 import model.GameData;
 
 public class PlayGameActivity extends AppCompatActivity {
 
+    public static final String HIGH_SCORE_PREF_VALUE = "High score";
     Button buttons[][];
     Board gameBoard;
     int scans;
     int uncoveredSkulls;
-
+    int savedRows, savedCols, savedSkulls;
+    int currentHighScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +42,14 @@ public class PlayGameActivity extends AppCompatActivity {
         GameData gameData = GameData.getInstance();
 
         // Get game settings from shared preferences
-        int savedRows = OptionsActivity.getNumRowsCols(this)[0];
-        int savedCols = OptionsActivity.getNumRowsCols(this)[1];
-        int savedSkulls = OptionsActivity.getNumSkulls(this);
+        savedRows = OptionsActivity.getNumRowsCols(this)[0];
+        savedCols = OptionsActivity.getNumRowsCols(this)[1];
+        savedSkulls = OptionsActivity.getNumSkulls(this);
+
+        currentHighScore = getHighScore(savedRows, savedCols, savedSkulls);
+
+        // Toast.makeText(this, "Current high score " + currentHighScore,
+                // Toast.LENGTH_LONG).show();
 
         gameData.setRows(savedRows);
         gameData.setCols(savedCols);
@@ -49,12 +58,35 @@ public class PlayGameActivity extends AppCompatActivity {
         scans = 0;
         uncoveredSkulls = 0;
 
+        setHiScoreText();
         setFoundScansText();
 
         gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getSkulls());
 
         populateButtons();
         populateGameBoard(gameBoard);
+    }
+
+    private int getHighScore(int savedRows, int savedCols, int savedSkulls) {
+        String prefName = "" + savedRows + "," + savedCols + "," + savedSkulls;
+        // System.out.println("TRACE: in getHighScore prefName: " + prefName);
+        SharedPreferences prefs = this.getSharedPreferences(prefName,MODE_PRIVATE);
+
+        int defaultScore = savedCols*savedRows+1;
+        int highScore = prefs.getInt(HIGH_SCORE_PREF_VALUE, defaultScore);
+
+        // System.out.println("TRACE: highScore = " + highScore);
+
+        return highScore;
+    }
+
+    private void saveNewHighScore(int savedRows, int savedCols, int savedSkulls, int newHighScore) {
+        String prefName = "" + savedRows + "," + savedCols + "," + savedSkulls;
+        // System.out.println("TRACE: in saveNewHighScore prefName: "+ prefName);
+        SharedPreferences prefs = this.getSharedPreferences(prefName, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(HIGH_SCORE_PREF_VALUE, newHighScore);
+        editor.apply();
     }
 
     private void populateButtons() {
@@ -134,11 +166,21 @@ public class PlayGameActivity extends AppCompatActivity {
         if (gameBoard.isGameOver(uncoveredSkulls)) {
             // Alert code taken from android blog
             // https://developer.android.com/guide/topics/ui/dialogs
-            AlertDialog.Builder builder = new AlertDialog.Builder(PlayGameActivity.this).setView(R.layout.victory_dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(PlayGameActivity.this)
+                    .setView(R.layout.victory_dialog);
 
             vibratePhone(300);
 
-            builder.setMessage(R.string.victory_dialog_message).setTitle(R.string.victory_dialog_title);
+            if (scans < currentHighScore) {
+                // Save new high score
+                // Toast.makeText(this, "Changing high score to " + scans,
+                        // Toast.LENGTH_LONG).show();
+                saveNewHighScore(savedRows, savedCols, savedSkulls, scans);
+                String victoryDialogString = getString(R.string.victory_dialog_message_new_high_score, scans);
+                builder.setMessage(victoryDialogString).setTitle(R.string.victory_dialog_title);
+            } else {
+                builder.setMessage(R.string.victory_dialog_message_no_new_high_score);
+            }
 
             builder.setPositiveButton(R.string.victory_ok, new DialogInterface.OnClickListener() {
                 @Override
@@ -146,14 +188,12 @@ public class PlayGameActivity extends AppCompatActivity {
                     finish();
                 }
             });
-
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     finish();
                 }
             });
-
             AlertDialog dialog = builder.create();
             dialog.show();
         }
@@ -183,6 +223,18 @@ public class PlayGameActivity extends AppCompatActivity {
                 button.setMaxHeight(height);
             }
         }
+    }
+
+    private void setHiScoreText() {
+        // Check if high score valid
+        String hiScore;
+        if (currentHighScore == (savedRows*savedCols) + 1) {
+            hiScore = getString(R.string.no_hi_score_string);
+        } else {
+            hiScore = getString(R.string.hi_score_string, currentHighScore);
+        }
+        TextView txtHiScore = findViewById(R.id.txtHighScore);
+        txtHiScore.setText(hiScore);
     }
 
     private void setFoundScansText() {
