@@ -15,11 +15,13 @@
         tools:layout_editor_absoluteY="5dp" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="656dp"
+        android:layout_height="366dp"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,10 +40,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
+            android:fadeScrollbars="false"
             android:fontFamily="@font/alien_encounters_solid_regular"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarThumbVertical="@android:color/white"
+            android:scrollbars="vertical"
             android:text="@string/help_credits"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textColorLink="@android:color/holo_blue_bright"
+            android:textSize="24sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

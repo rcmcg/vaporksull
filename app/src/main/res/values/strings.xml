@@ -14,15 +14,19 @@
 
     <string name="help_credits">
         The goal of VAPORSKULL is to uncover all the skulls on the game board by using the least number of scans possible.
-        Selecting a pink cell will either reveal a skull or use a scan to count and display the total number of hidden
-        skulls in the row and column. Selecting a revealed skull will also use a scan on the skull. When all skulls are
-        revealed, the game is over and you win.
+        Selecting a pink box will either reveal a skull or use a scan to count and display the total number of hidden
+        skulls in the row and column corresponding to that box. You can also select a revealed skull to trigger a scan in a similar manner.
+        When all skulls are revealed, the game is over and you win.
         \n\n
         All artwork created by Breanna McGowan and used with permission. \n
         Instagram: @breahappy
         \n\n
-        Alien Encounters font, free for personal use\n
-        Link: https://www.dafont.com/alien-encounters.font
+        <a href="https://www.dafont.com/alien-encounters.font">Alien encounters font</a>, free for personal use
+        \n\n
+
+        Created for CMPT276 - Intro. to Software Engineering at SFU\n
+        <a href="https://opencoursehub.cs.sfu.ca/jackt/grav-cms/cmpt276/home">Course webpage</a>
+        \n
     </string>
 
     <string name="victory_dialog_title">You win!</string>
