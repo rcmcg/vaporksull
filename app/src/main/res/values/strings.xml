@@ -14,8 +14,8 @@
         You found all the skulls! Press OK to return to the main menu
     </string>
     <string name="victory_dialog_message_new_high_score">
-        You found all the skulls and set a new high score with %1$d scans! Press
-        OK to return to the main menu
+        You set a high score on this board configuration with only %1$d scans!
+        Press OK to return to the main menu
     </string>
     <string name="victory_ok">OK</string>
     <string name="victory_dialog_alert_skull_description">Victory dialog alert skull</string>
@@ -23,7 +23,6 @@
 
     <string name="board_size_prompt">Board size prompt</string>
     <string-array name="board_size_arrays">
-        <item>Select a board size</item>
         <item>4 x 6</item>
         <item>5 x 10</item>
         <item>6 x 15</item>
@@ -40,7 +39,6 @@
 
 
     <string-array name="num_skull_array">
-        <item>Select number of skulls</item>
         <item>6</item>
         <item>10</item>
         <item>15</item>
@@ -69,7 +67,7 @@
         <a href="https://opencoursehub.cs.sfu.ca/jackt/grav-cms/cmpt276/home">Course webpage</a>
         \n
         Game created by Reece McGowan
-        \n
+        \n\n
     </string>
 
     <string name="welcome_game_icon_description">Skull icon theme of game</string>

@@ -24,13 +24,6 @@ public class OptionsActivity extends AppCompatActivity {
     private static final String COL_PREF_NAME = "Num cols";
     private static final String BOARD_PREF_NAME = "BoardSettings";
 
-    public static Intent getBoardOptions(Context context) {
-        Intent intent = new Intent(context, OptionsActivity.class);
-        intent.putExtra("Board Options", boardOptions);
-        intent.putExtra("Skull Options", skullOptions);
-        return intent;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +51,8 @@ public class OptionsActivity extends AppCompatActivity {
         // Choose correct spinner option when activity opens
         for (int i = 0; i < boardOptions.length; i++) {
             if (getNumRowsCols(this)[0] == boardOptions[i][0]) {
-                gameSizeSpinner.setSelection(i+1);
+                gameSizeSpinner.setSelection(i);
+                break;
             }
         }
 
@@ -66,11 +60,9 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
-                if(position != 0) {
-                    gameData.setRows(boardOptions[position-1][0]);
-                    gameData.setCols(boardOptions[position-1][1]);
-                    saveBoardSettings(gameData.getRows(), gameData.getCols());
-                }
+                gameData.setRows(boardOptions[position][0]);
+                gameData.setCols(boardOptions[position][1]);
+                saveBoardSettings(gameData.getRows(), gameData.getCols());
             }
 
             @Override
@@ -79,23 +71,24 @@ public class OptionsActivity extends AppCompatActivity {
         });
     }
 
+    static public int[] getNumRowsCols(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(BOARD_PREF_NAME, MODE_PRIVATE);
+
+        int defaultRows = context.getResources().getInteger(R.integer.default_rows);
+        int defaultCols = context.getResources().getInteger(R.integer.default_cols);
+
+        int rows = prefs.getInt(ROW_PREF_NAME, defaultRows);
+        int cols = prefs.getInt(COL_PREF_NAME, defaultCols);
+
+        return new int[]{rows,cols};
+    }
+
     private void saveBoardSettings(int rows, int cols) {
         SharedPreferences prefs = this.getSharedPreferences(BOARD_PREF_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(ROW_PREF_NAME, rows);
         editor.putInt(COL_PREF_NAME, cols);
         editor.apply();
-    }
-
-    static public int[] getNumRowsCols(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(BOARD_PREF_NAME, MODE_PRIVATE);
-
-        int default_rows = context.getResources().getInteger(R.integer.default_rows);
-        int default_cols = context.getResources().getInteger(R.integer.default_cols);
-
-        int rows = prefs.getInt(ROW_PREF_NAME, default_rows);
-        int cols = prefs.getInt(COL_PREF_NAME, default_cols);
-        return new int[]{rows,cols};
     }
 
     private void saveSkullSettings(int skulls) {
@@ -122,10 +115,10 @@ public class OptionsActivity extends AppCompatActivity {
         skullAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         skullSpinner.setAdapter(skullAdapter);
 
-        // Choose correct spinner option when activity opens
         for (int i = 0; i < skullOptions.length; i++) {
             if (getNumSkulls(this) == skullOptions[i]) {
-                skullSpinner.setSelection(i+1);
+                skullSpinner.setSelection(i);
+                break;
             }
         }
 
@@ -134,10 +127,8 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
-                if(position != 0) {
-                    gameData.setSkulls(skullOptions[position-1]);
-                    saveSkullSettings(gameData.getSkulls());
-                }
+                gameData.setSkulls(skullOptions[position]);
+                saveSkullSettings(gameData.getSkulls());
             }
 
             @Override
