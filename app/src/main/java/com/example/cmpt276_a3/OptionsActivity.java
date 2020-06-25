@@ -127,8 +127,8 @@ public class OptionsActivity extends AppCompatActivity {
 
         int default_mines = context.getResources().getInteger(R.integer.default_mines);
 
-        int rows = prefs.getInt("Num mines", default_mines);
-        return default_mines;
+        int mines = prefs.getInt("Num mines", default_mines);
+        return mines;
     }
 
     private void populateMineSpinner() {
@@ -159,6 +159,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
                 if(position != 0) {
+                    System.out.println("TRACE: selected a mine");
                     gameData.setMines(mineOptions[position-1]);
                     saveMineSettings(gameData.getMines());
                 }

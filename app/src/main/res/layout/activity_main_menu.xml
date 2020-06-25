@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash2_50percent"
+        android:src="@drawable/stayrad_25percent"
         tools:layout_editor_absoluteY="5dp" />
         <!--android:src="@drawable/bg2_50percent"-->
 
