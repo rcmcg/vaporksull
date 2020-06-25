@@ -1,35 +1,35 @@
 package model;
 
 public class Cell {
-    private Mine mine;
+    private Skull skull;
     private boolean scanned;
     private int hiddenCount;
 
-    public Cell(boolean buildMine) {
-        if (buildMine) {
-            mine = new Mine();
+    public Cell(boolean buildSkull) {
+        if (buildSkull) {
+            skull = new Skull();
         } else {
-            mine = null;
+            skull = null;
         }
         scanned = false;
         hiddenCount = -1;
     }
 
-    public boolean hasMine() {
-        return mine != null;
+    public boolean hasSkull() {
+        return skull != null;
     }
 
-    public Mine getMine() {
-        return mine;
+    public Skull getSkull() {
+        return skull;
     }
 
-    public void setMine(boolean bool) {
-        if (bool) {
-            if (!hasMine()) {
-                mine = new Mine();
+    public void setSkull(boolean buildSkull) {
+        if (buildSkull) {
+            if (!hasSkull()) {
+                skull = new Skull();
             }
         } else {
-            mine = null;
+            skull = null;
         }
         return;
     }

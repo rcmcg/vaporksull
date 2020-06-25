@@ -2,8 +2,6 @@ package model;
 
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -23,7 +21,7 @@ public class BoardTest {
         int numMines = 0;
         for (int row = 0; row < board.getRows(); row++) {
             for (int col = 0; col < board.getCols(); col++) {
-                if (board.getIndex(row,col).hasMine()) {
+                if (board.getIndex(row,col).hasSkull()) {
                     numMines++;
                 }
             }
@@ -38,7 +36,7 @@ public class BoardTest {
         int numMines = 0;
         for (int row = 0; row < board.getRows(); row++) {
             for (int col = 0; col < board.getCols(); col++) {
-                if (board.getIndex(row,col).hasMine()) {
+                if (board.getIndex(row,col).hasSkull()) {
                     numMines++;
                 }
             }

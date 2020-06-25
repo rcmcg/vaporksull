@@ -11,58 +11,45 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/stayrad_25percent"
-        tools:layout_editor_absoluteY="5dp" />
-        <!--android:src="@drawable/bg2_50percent"-->
+        tools:layout_editor_absoluteY="5dp"
+        android:contentDescription="@string/background_main_menu_description" />
+    <!--android:src="@drawable/welcome_splash"-->
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="52dp"
-            android:orientation="vertical">
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:background="@drawable/boxes4"
+            android:fontFamily="@font/alien_encounters_solid_italic"
+            android:text="@string/play_button"
+            android:textSize="30sp" />
 
-            <Button
-                android:id="@+id/btnPlay"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="@string/play_button"
-                android:fontFamily="@font/alien_encounters_solid_italic"
-                android:background="@drawable/boxes4"
-                android:textSize="30sp" />
+        <Button
+            android:id="@+id/btnOptions"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/boxes"
+            android:fontFamily="@font/alien_encounters_solid_italic"
+            android:text="@string/options_button"
+            android:textSize="30sp" />
 
-            <Button
-                android:id="@+id/btnOptions"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="@string/options_button"
-                android:fontFamily="@font/alien_encounters_solid_italic"
-                android:background="@drawable/boxes"
-                android:textSize="30sp" />
-
-            <Button
-                android:id="@+id/btnHelp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="@string/help_button"
-                android:fontFamily="@font/alien_encounters_solid_italic"
-                android:background="@drawable/boxes4"
-                android:textSize="30sp" />
-
-        </LinearLayout>
-
-        <!--
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/skull4_50percent" />
-        -->
+        <Button
+            android:id="@+id/btnHelp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/boxes4"
+            android:fontFamily="@font/alien_encounters_solid_italic"
+            android:text="@string/help_button"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

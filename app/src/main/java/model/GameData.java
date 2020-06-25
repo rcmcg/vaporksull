@@ -3,14 +3,7 @@ package model;
 public class GameData {
     private static int rows = 0;
     private static int cols = 0;
-    private static int mines = 0;
-
-    // private static int DEFAULT_ROWS = 4;
-    // private static int DEFAULT_COLS = 6;
-    // private static int DEFAULT_MINES = 5;
-
-
-    // Potentially use this function to save and load information
+    private static int skulls = 0;
 
     private static GameData gameData;
 
@@ -21,10 +14,6 @@ public class GameData {
     public static GameData getInstance() {
         if (gameData == null) {
             gameData = new GameData();
-            // Set default options
-            // rows = DEFAULT_ROWS;
-            // cols = DEFAULT_COLS;
-            // mines = DEFAULT_MINES;
         }
         return gameData;
     }
@@ -45,11 +34,11 @@ public class GameData {
         GameData.cols = cols;
     }
 
-    public static int getMines() {
-        return mines;
+    public static int getSkulls() {
+        return skulls;
     }
 
-    public static void setMines(int mines) {
-        GameData.mines = mines;
+    public static void setSkulls(int skulls) {
+        GameData.skulls = skulls;
     }
 }

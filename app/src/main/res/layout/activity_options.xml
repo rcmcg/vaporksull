@@ -7,12 +7,13 @@
     tools:context=".OptionsActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/help_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/splash3_50percent"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="5dp"
+        android:contentDescription="@string/background_help_description" />
 
     <LinearLayout
         android:layout_width="737dp"
@@ -65,13 +66,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/alien_encounters_solid"
-                android:text="@string/optionsActivity_mines"
+                android:text="@string/optionsActivity_skulls"
 
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
 
             <Spinner
-                android:id="@+id/mine_spinner"
+                android:id="@+id/skull_spinner"
                 android:layout_width="544dp"
                 android:layout_height="wrap_content" />
 

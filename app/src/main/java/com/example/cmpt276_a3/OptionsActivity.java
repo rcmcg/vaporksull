@@ -15,12 +15,19 @@ import model.GameData;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    int[][] boardOptions = new int[][]{ {4,6}, {5,10}, {6,15}};
-    int[] mineOptions = new int[]{6, 10, 15, 20 };
 
+    int[][] boardOptions = new int[][]{{4,6}, {5,10}, {6,15}};
+    int[] skullOptions = new int[]{6, 10, 15, 20 };
+
+    private static final String SKULL_PREF_NAME = "Skull settings";
+    private static final String NUM_SKULLS_PREF_NAME = "Num skulls";
     private static final String ROW_PREF_NAME = "Num rows";
     private static final String COL_PREF_NAME = "Num cols";
     private static final String BOARD_PREF_NAME = "BoardSettings";
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +35,9 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
 
         int[] savedRowsCols = getNumRowsCols(this);
-        // Toast.makeText(this, "Saved rows cols: " + savedRowsCols[0] + "," + savedRowsCols[1], Toast.LENGTH_SHORT)
-            // .show();
 
-        // Spinner mineSpinner = findViewById(R.id.game_spinner);
         populateGameSizeSpinner();
-        populateMineSpinner();
+        populateSkullSpinner();
     }
 
     private void populateGameSizeSpinner() {
@@ -41,48 +45,24 @@ public class OptionsActivity extends AppCompatActivity {
         // https://www.youtube.com/watch?v=urQp7KsQhW8
         // https://www.youtube.com/watch?v=mrcrFY-5c-c
 
-        // Video to make spinners custom
-        //https://www.youtube.com/watch?v=GeO5F0nnzAw
         Spinner gameSizeSpinner = findViewById(R.id.game_size_spinner);
         ArrayAdapter<CharSequence> gameSizeAdapter = ArrayAdapter.createFromResource(this,
                 R.array.board_size_arrays,
                 R.layout.spinner_style);
-        // ArrayAdapter<String> gameSizeAdapter = new ArrayAdapter<>(this,
-                // android.R.layout.simple_list_item_1,
-                // getResources().getStringArray(R.array.board_size_arrays));
         gameSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gameSizeSpinner.setAdapter(gameSizeAdapter);
 
-        // The spinner should select the chosen option to be the current gameData
-        // needs to save between runs
-
-        // Select default spinner
-
+        // Choose correct spinner option when activity opens
         for (int i = 0; i < boardOptions.length; i++) {
             if (getNumRowsCols(this)[0] == boardOptions[i][0]) {
                 gameSizeSpinner.setSelection(i+1);
             }
         }
 
-
         gameSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
-
-                /*
-                if(position == 1) {
-                    gameData.setRows(4);
-                    gameData.setCols(6);
-                } else if (position == 2) {
-                    gameData.setRows(5);
-                    gameData.setCols(10);
-                } else if (position == 3){
-                    gameData.setRows(6);
-                    gameData.setCols(15);
-                }
-
-                 */
                 if(position != 0) {
                     gameData.setRows(boardOptions[position-1][0]);
                     gameData.setCols(boardOptions[position-1][1]);
@@ -115,60 +95,50 @@ public class OptionsActivity extends AppCompatActivity {
         return new int[]{rows,cols};
     }
 
-    private void saveMineSettings(int mines) {
-        SharedPreferences prefs = this.getSharedPreferences("Mine settings", MODE_PRIVATE);
+    private void saveSkullSettings(int skulls) {
+        SharedPreferences prefs = this.getSharedPreferences(SKULL_PREF_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("Num mines", mines);
+        editor.putInt(NUM_SKULLS_PREF_NAME, skulls);
         editor.apply();
     }
 
-    static public int getNumMines(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences("Mine settings", MODE_PRIVATE);
+    static public int getNumSkulls(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SKULL_PREF_NAME, MODE_PRIVATE);
 
-        int default_mines = context.getResources().getInteger(R.integer.default_mines);
+        int default_skull = context.getResources().getInteger(R.integer.default_skulls);
 
-        int mines = prefs.getInt("Num mines", default_mines);
-        return mines;
+        return prefs.getInt(NUM_SKULLS_PREF_NAME, default_skull);
     }
 
-    private void populateMineSpinner() {
-        Spinner mineSpinner = findViewById(R.id.mine_spinner);
+    private void populateSkullSpinner() {
+        Spinner skullSpinner = findViewById(R.id.skull_spinner);
 
-        // ArrayAdapter<String> mineAdapter = new ArrayAdapter<>(this,
-                // android.R.layout.simple_list_item_1,
-                // getResources().getStringArray(R.array.mine_size_arrays));
-        ArrayAdapter<CharSequence> mineAdapter = ArrayAdapter.createFromResource(this,
-                R.array.mine_size_arrays,
+        ArrayAdapter<CharSequence> skullAdapter = ArrayAdapter.createFromResource(this,
+                R.array.num_skull_array,
                 R.layout.spinner_style);
-        mineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mineSpinner.setAdapter(mineAdapter);
+        skullAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        skullSpinner.setAdapter(skullAdapter);
 
-        // The spinner should select the chosen option to be the current gameData
-        // needs to save between runs
-
-        // Select default spinner
-        for (int i = 0; i < mineOptions.length; i++) {
-            if (getNumMines(this) == mineOptions[i]) {
-                mineSpinner.setSelection(i+1);
+        // Choose correct spinner option when activity opens
+        for (int i = 0; i < skullOptions.length; i++) {
+            if (getNumSkulls(this) == skullOptions[i]) {
+                skullSpinner.setSelection(i+1);
             }
         }
 
 
-        mineSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        skullSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameData gameData = GameData.getInstance();
                 if(position != 0) {
-                    System.out.println("TRACE: selected a mine");
-                    gameData.setMines(mineOptions[position-1]);
-                    saveMineSettings(gameData.getMines());
+                    gameData.setSkulls(skullOptions[position-1]);
+                    saveSkullSettings(gameData.getSkulls());
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // GameData gameData = GameData.getInstance();
-                // Toast.makeText(OptionsActivity.this, ""+gameData.getRows(), Toast.LENGTH_SHORT).show();
             }
         });
     }

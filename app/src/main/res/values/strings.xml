@@ -2,40 +2,20 @@
     <string name="app_name">VAPORSKULL</string>
     <string name="myGameName">VAPORSKULL</string>
     <string name="game_name">null</string>
-    <string name="welcome_game_icon_description">Icon for theme of game (undecided)</string>
+
     <string name="btnWelcomeNextStr">Next</string>
     <string name="by_author_name">by Reece McGowan</string>
 
     <string name="cell_text">%1$d</string>
-    
-    <string name="found_mines">Found %1$d of %2$d mines</string>
-    
+    <string name="found_skulls">Found %1$d of %2$d skulls</string>
     <string name="scans_used">Scans used: %1$d</string>
-
-    <string name="help_credits">
-        The goal of VAPORSKULL is to uncover all the skulls on the game board by using the least number of scans possible.
-        Selecting a pink box will either reveal a skull or use a scan to count and display the total number of hidden
-        skulls in the row and column corresponding to that box. You can also select a revealed skull to trigger a scan in a similar manner.
-        When all skulls are revealed, the game is over and you win.
-        \n\n
-        All artwork created by Breanna McGowan and used with permission. \n
-        Instagram: @breahappy
-        \n\n
-        <a href="https://www.dafont.com/alien-encounters.font">Alien encounters font</a>, free for personal use
-        \n\n
-
-        Created for CMPT276 - Intro. to Software Engineering at SFU\n
-        <a href="https://opencoursehub.cs.sfu.ca/jackt/grav-cms/cmpt276/home">Course webpage</a>
-        \n
-    </string>
-
     <string name="victory_dialog_title">You win!</string>
-
     <string name="victory_dialog_message">
         You found all the skulls! Press OK to return to the main menu
     </string>
-
     <string name="victory_ok">OK</string>
+    <string name="victory_dialog_alert_skull_description">Victory dialog alert skull</string>
+
 
     <string name="board_size_prompt">Board size prompt</string>
     <string-array name="board_size_arrays">
@@ -47,20 +27,50 @@
     
     <integer name="default_rows">4</integer>
     <integer name="default_cols">6</integer>
-    <integer name="default_mines">6</integer>
+    <integer name="default_skulls">6</integer>
 
-    <string name="mines_prompt"># Mines prompt</string>
-    <string name="play_button">Play</string>
-    <string name="options_button">Options</string>
-    <string name="help_button">Help</string>
     <string name="optionsActivity_settings">Settings</string>
     <string name="optionsActivity_board_size">Board size:</string>
-    <string name="optionsActivity_mines"># Mines:</string>
-    <string-array name="mine_size_arrays">
-        <item>Select number of mines</item>
+    <string name="optionsActivity_skulls"># Skulls:</string>
+    <string name="help_and_credits">Help and Credits</string>
+
+
+    <string-array name="num_skull_array">
+        <item>Select number of skulls</item>
         <item>6</item>
         <item>10</item>
         <item>15</item>
         <item>20</item>
     </string-array>
+
+    <string name="play_button">Play</string>
+    <string name="options_button">Options</string>
+    <string name="help_button">Help</string>
+
+    <string name="help_credits">
+        The goal of VAPORSKULL is to uncover all the skulls on the game board by using the least number of scans possible.
+        Selecting a pink box will either reveal a skull or use a scan to count and display the total number of hidden
+        skulls in the row and column corresponding to that box. You can also select a revealed skull to trigger a scan in a similar manner.
+        When all skulls are revealed, the game is over and you win.
+        \n\n
+        <u>Credit</u>
+        \n
+        All artwork created by Breanna McGowan and used with permission. \n
+        Instagram: @breahappy
+        \n\n
+        <a href="https://www.dafont.com/alien-encounters.font">Alien encounters font</a>, free for personal use
+        \n\n
+
+        Created for CMPT276 - Intro. to Software Engineering at SFU\n
+        <a href="https://opencoursehub.cs.sfu.ca/jackt/grav-cms/cmpt276/home">Course webpage</a>
+        \n
+        Game created by Reece McGowan
+        \n
+    </string>
+
+    <string name="welcome_game_icon_description">Skull icon theme of game</string>
+    <string name="help_background_description">Background for help activity</string>
+    <string name="background_main_menu_description">Background for main menu</string>
+    <string name="background_help_description">Background for help activity</string>
+    <string name="background_welcome_description">Background for welcome activity</string>
 </resources>

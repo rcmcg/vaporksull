@@ -28,8 +28,6 @@ public class MainMenuActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Launch game
-                // Get the Singleton with the GameData inside PlayGameActivity
                 Intent intent = PlayGameActivity.makeIntent(MainMenuActivity.this);
                 startActivityForResult(intent, LAUNCH_GAME);
             }
@@ -41,7 +39,6 @@ public class MainMenuActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Launch options
                 Intent intent = OptionsActivity.makeIntent(MainMenuActivity.this);
                 startActivityForResult(intent, LAUNCH_OPTIONS);
             }
@@ -53,7 +50,6 @@ public class MainMenuActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Launch options
                 Intent intent = HelpActivity.makeIntent(MainMenuActivity.this);
                 startActivityForResult(intent, LAUNCH_HELP);
             }

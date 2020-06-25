@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity">
-    <!--android:background="@drawable/bg2_50percent"-->
+    <!--android:background="@drawable/welcome_splash"-->
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg2_50percent"
-        tools:layout_editor_absoluteY="271dp" />
+        android:src="@drawable/welcome_splash"
+        tools:layout_editor_absoluteY="271dp"
+        android:contentDescription="@string/background_welcome_description" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
         android:layout_height="29dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/alien_encounters_italic"
+        android:fontFamily="@font/alien_encounters_solid_bold_italic"
         android:text="@string/by_author_name"
         android:textColor="#FFFFFF"
         android:textSize="30sp"

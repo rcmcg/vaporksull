@@ -7,35 +7,35 @@ import static org.junit.Assert.*;
 public class CellTest {
 
     @Test
-    public void hasMine0() {
+    public void hasSkull0() {
         Cell cell = new Cell(false);
-        assertEquals(false, cell.hasMine());
+        assertEquals(false, cell.hasSkull());
     }
 
     @Test
-    public void hasMine1() {
+    public void hasSkull1() {
         Cell cell = new Cell(true);
-        assertEquals(true, cell.hasMine());
+        assertEquals(true, cell.hasSkull());
     }
 
     @Test
-    public void getMine() {
+    public void getSkull() {
         Cell cell = new Cell(true);
-        assertEquals(false, cell.getMine() ==  null);
+        assertEquals(false, cell.getSkull() ==  null);
     }
 
     @Test
-    public void setMine0() {
+    public void setSkull0() {
         Cell cell = new Cell(false);
-        cell.setMine(true);
-        assertEquals(true, cell.hasMine());
+        cell.setSkull(true);
+        assertEquals(true, cell.hasSkull());
     }
 
     @Test
-    public void setMine1() {
+    public void setSkull1() {
         Cell cell = new Cell(true);
-        cell.setMine(false);
-        assertEquals(false, cell.hasMine());
+        cell.setSkull(false);
+        assertEquals(false, cell.hasSkull());
     }
 
     @Test

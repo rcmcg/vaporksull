@@ -1,47 +1,33 @@
 package com.example.cmpt276_a3;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.sql.SQLOutput;
 
 import model.Board;
-import model.Cell;
 import model.GameData;
-import model.Mine;
 
 public class PlayGameActivity extends AppCompatActivity {
 
     Button buttons[][];
     Board gameBoard;
     int scans;
-    int uncoveredMines;
+    int uncoveredSkulls;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +37,21 @@ public class PlayGameActivity extends AppCompatActivity {
         // Get GameData Singleton
         GameData gameData = GameData.getInstance();
 
-        // Update to SharedPreferences
+        // Get game settings from shared preferences
         int savedRows = OptionsActivity.getNumRowsCols(this)[0];
         int savedCols = OptionsActivity.getNumRowsCols(this)[1];
-        int savedMines = OptionsActivity.getNumMines(this);
+        int savedSkulls = OptionsActivity.getNumSkulls(this);
 
         gameData.setRows(savedRows);
         gameData.setCols(savedCols);
-        gameData.setMines(savedMines);
+        gameData.setSkulls(savedSkulls);
 
-        // TEST
-        // gameData.setRows(4);
-        // gameData.setCols(6);
-        // gameData.setMines(24);
         scans = 0;
-        uncoveredMines = 0;
+        uncoveredSkulls = 0;
 
         setFoundScansText();
 
-        gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getMines());
+        gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getSkulls());
 
         populateButtons();
         populateGameBoard(gameBoard);
@@ -102,8 +84,6 @@ public class PlayGameActivity extends AppCompatActivity {
                         1.0f
                 ));
 
-                // btn.setText("" + row + "," + col);
-
                 // Make text not clip on small buttons
                 btn.setPadding(0,0,0,0);
                 btn.setBackground(getDrawable(R.drawable.gradient));
@@ -117,7 +97,6 @@ public class PlayGameActivity extends AppCompatActivity {
                     }
                 });
 
-
                 tableRow.addView(btn);
                 buttons[row][col] = btn;
             }
@@ -125,26 +104,26 @@ public class PlayGameActivity extends AppCompatActivity {
     }
 
     private void gridButtonClicked(int row, int col) {
-        // Start replacing code
+        // To check if a scan was performed or if a skull was revealed
         int oldScans = scans;
-        int oldUncoveredMines = uncoveredMines;
+        int oldUncoveredSkulls = uncoveredSkulls;
 
         Button btn = buttons[row][col];
         int[] newScansUncovered = gameBoard.cellClicked(
                 row, col,
-                scans, uncoveredMines,
+                scans, uncoveredSkulls,
                 buttons,
                 PlayGameActivity.this);
 
         scans = newScansUncovered[0];
-        uncoveredMines = newScansUncovered[1];
+        uncoveredSkulls = newScansUncovered[1];
 
         if (scans > oldScans) {
             vibratePhone(10);
         }
 
-        if(uncoveredMines > oldUncoveredMines) {
-            vibratePhone(200);
+        if(uncoveredSkulls > oldUncoveredSkulls) {
+            vibratePhone(50);
         }
 
         // Lock button sizes
@@ -152,17 +131,14 @@ public class PlayGameActivity extends AppCompatActivity {
 
         setFoundScansText();
 
-        if (gameBoard.isGameOver(uncoveredMines)) {
-            // Toast.makeText(this, "You win!",Toast.LENGTH_LONG).show();
-            
+        if (gameBoard.isGameOver(uncoveredSkulls)) {
             // Alert code taken from android blog
             // https://developer.android.com/guide/topics/ui/dialogs
             AlertDialog.Builder builder = new AlertDialog.Builder(PlayGameActivity.this).setView(R.layout.victory_dialog);
 
-            vibratePhone(500);
+            vibratePhone(300);
 
-            builder.setMessage(R.string.victory_dialog_message)
-                    .setTitle(R.string.victory_dialog_title);
+            builder.setMessage(R.string.victory_dialog_message).setTitle(R.string.victory_dialog_title);
 
             builder.setPositiveButton(R.string.victory_ok, new DialogInterface.OnClickListener() {
                 @Override
@@ -179,9 +155,7 @@ public class PlayGameActivity extends AppCompatActivity {
             });
 
             AlertDialog dialog = builder.create();
-            // dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
             dialog.show();
-
         }
     }
 
@@ -214,10 +188,10 @@ public class PlayGameActivity extends AppCompatActivity {
     private void setFoundScansText() {
         GameData gameData = GameData.getInstance();
 
-        // Set text for foundMines and scansPerformed
-        TextView txtFoundMines = findViewById(R.id.txtFoundMines);
-        String found_mines = getString(R.string.found_mines, uncoveredMines, gameData.getMines());
-        txtFoundMines.setText(found_mines);
+        // Set text for foundSkulls and scansPerformed
+        TextView txtFoundSkulls = findViewById(R.id.txtFoundSkulls);
+        String foundSkulls = getString(R.string.found_skulls, uncoveredSkulls, gameData.getSkulls());
+        txtFoundSkulls.setText(foundSkulls);
 
         TextView txtScans = findViewById(R.id.txtScansPerformed);
         String scans_performed = getString(R.string.scans_used, scans);
@@ -227,7 +201,7 @@ public class PlayGameActivity extends AppCompatActivity {
     private void populateGameBoard(Board gameBoard) {
         // Setup initial game board
         GameData gameData = GameData.getInstance();
-        gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getMines());
+        gameBoard = new Board(gameData.getRows(), gameData.getCols(), gameData.getSkulls());
     }
 
     public static Intent makeIntent(Context context) {
