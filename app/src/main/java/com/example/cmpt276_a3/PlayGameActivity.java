@@ -15,7 +15,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -123,6 +126,9 @@ public class PlayGameActivity extends AppCompatActivity {
 
     private void gridButtonClicked(int row, int col) {
         // Start replacing code
+        int oldScans = scans;
+        int oldUncoveredMines = uncoveredMines;
+
         Button btn = buttons[row][col];
         int[] newScansUncovered = gameBoard.cellClicked(
                 row, col,
@@ -133,6 +139,14 @@ public class PlayGameActivity extends AppCompatActivity {
         scans = newScansUncovered[0];
         uncoveredMines = newScansUncovered[1];
 
+        if (scans > oldScans) {
+            vibratePhone(10);
+        }
+
+        if(uncoveredMines > oldUncoveredMines) {
+            vibratePhone(200);
+        }
+
         // Lock button sizes
         lockButtonSizes();
 
@@ -140,10 +154,12 @@ public class PlayGameActivity extends AppCompatActivity {
 
         if (gameBoard.isGameOver(uncoveredMines)) {
             // Toast.makeText(this, "You win!",Toast.LENGTH_LONG).show();
-
+            
             // Alert code taken from android blog
             // https://developer.android.com/guide/topics/ui/dialogs
             AlertDialog.Builder builder = new AlertDialog.Builder(PlayGameActivity.this).setView(R.layout.victory_dialog);
+
+            vibratePhone(500);
 
             builder.setMessage(R.string.victory_dialog_message)
                     .setTitle(R.string.victory_dialog_title);
@@ -166,6 +182,16 @@ public class PlayGameActivity extends AppCompatActivity {
             // dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
             dialog.show();
 
+        }
+    }
+
+    // This function taken from
+    // https://stackoverflow.com/questions/13950338/how-to-make-an-android-device-vibrate
+    private void vibratePhone(int milliseconds) {
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(milliseconds);
         }
     }
 
