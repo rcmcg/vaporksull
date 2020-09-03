@@ -8,9 +8,12 @@ Here is a short video walking through the game (44s, no audio): https://youtu.be
 An album of screenshots can be found here, as well as in the docs folder: https://imgur.com/a/SAiYDRv 
 
 Credits: 
+
 All artwork created by Breanna McGowan and used with permission. Instagram: @breahappy
-Alien encounters font, free for personal use: dafont.com/alien-encounters.font
-Created for CMPT276 - Intro. To Software Engineering at Simon Fraser University
+
+Alien encounters font, free for personal use: dafont.com/alien-encounters.font 
+
+Created for CMPT276 - Intro. To Software Engineering at Simon Fraser University 
 
 
 
